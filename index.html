@@ -1,205 +1,237 @@
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-#app { padding: 1.5rem 0; max-width: 640px; margin: 0 auto; font-family: var(--font-sans); }
-.header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-.title { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
-.counter-pill { font-size: 13px; color: var(--color-text-secondary); background: var(--color-background-secondary); padding: 4px 14px; border-radius: 20px; border: 0.5px solid var(--color-border-tertiary); }
-.progress-bar { width: 100%; height: 3px; background: var(--color-background-secondary); border-radius: 2px; margin-bottom: 1.5rem; }
-.progress-fill { height: 100%; background: #1D9E75; border-radius: 2px; transition: width 0.4s ease; }
-.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 1.5rem; }
-.stat { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px; text-align: center; }
-.stat-val { font-size: 20px; font-weight: 500; color: var(--color-text-primary); }
-.stat-val.g { color: #1D9E75; }
-.stat-val.r { color: #E24B4A; }
-.stat-lbl { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
-.q-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.5rem; margin-bottom: 1rem; }
-.q-num { font-size: 12px; font-weight: 500; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
-.q-text { font-size: 16px; font-weight: 500; color: var(--color-text-primary); line-height: 1.6; margin-bottom: 1.25rem; }
-.options { display: flex; flex-direction: column; gap: 8px; }
-.opt { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); cursor: pointer; transition: all 0.15s; background: var(--color-background-primary); font-family: var(--font-sans); font-size: 14px; color: var(--color-text-primary); text-align: left; line-height: 1.5; width: 100%; }
+#root { font-family: 'DM Sans', var(--font-sans); padding: 2rem 0 3rem; max-width: 620px; margin: 0 auto; }
+.quiz-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 2rem; }
+.quiz-brand { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--color-text-primary); line-height: 1.2; }
+.quiz-brand span { display: block; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; color: var(--color-text-tertiary); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+.pbar-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 2rem; }
+.pbar-track { flex: 1; height: 2px; background: var(--color-border-tertiary); border-radius: 2px; overflow: hidden; }
+.pbar-fill { height: 100%; background: #1D9E75; border-radius: 2px; transition: width 0.5s cubic-bezier(0.4,0,0.2,1); }
+.pbar-label { font-size: 13px; color: var(--color-text-tertiary); white-space: nowrap; min-width: 44px; text-align: right; }
+.stats-strip { display: flex; gap: 8px; margin-bottom: 2rem; }
+.stat-chip { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 12px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-primary); }
+.stat-chip i { font-size: 16px; }
+.stat-chip .val { font-size: 18px; font-weight: 500; }
+.stat-chip .lbl { font-size: 12px; color: var(--color-text-secondary); }
+.stat-chip.green { background: #E1F5EE; border-color: #5DCAA5; }
+.stat-chip.green .val { color: #085041; }
+.stat-chip.green i { color: #1D9E75; }
+.stat-chip.red { background: #FCEBEB; border-color: #F09595; }
+.stat-chip.red .val { color: #501313; }
+.stat-chip.red i { color: #E24B4A; }
+.q-block { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; margin-bottom: 1.25rem; background: var(--color-background-primary); }
+.q-top { background: var(--color-background-secondary); padding: 1.25rem 1.5rem; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.q-tag { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-tertiary); margin-bottom: 0.75rem; }
+.q-text { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--color-text-primary); line-height: 1.65; }
+.q-opts { padding: 1rem 1rem; display: flex; flex-direction: column; gap: 8px; }
+.opt { display: flex; align-items: center; gap: 12px; padding: 13px 16px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); cursor: pointer; background: var(--color-background-primary); width: 100%; text-align: left; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--color-text-primary); transition: border-color 0.12s, background 0.12s; line-height: 1.5; }
 .opt:hover:not(:disabled) { background: var(--color-background-secondary); border-color: var(--color-border-primary); }
-.opt .ltr { min-width: 24px; height: 24px; border-radius: 50%; border: 0.5px solid var(--color-border-secondary); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; color: var(--color-text-secondary); flex-shrink: 0; margin-top: 1px; transition: all 0.15s; }
+.opt:active:not(:disabled) { transform: scale(0.995); }
+.opt .badge { width: 28px; height: 28px; min-width: 28px; border-radius: 50%; border: 0.5px solid var(--color-border-secondary); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; color: var(--color-text-secondary); transition: all 0.12s; }
 .opt.correct { background: #E1F5EE; border-color: #1D9E75; }
-.opt.correct .ltr { background: #1D9E75; border-color: #1D9E75; color: white; }
-.opt.correct .opt-text { color: #085041; }
+.opt.correct .badge { background: #1D9E75; border-color: #1D9E75; color: #fff; }
+.opt.correct .opt-txt { color: #085041; }
 .opt.wrong { background: #FCEBEB; border-color: #E24B4A; }
-.opt.wrong .ltr { background: #E24B4A; border-color: #E24B4A; color: white; }
-.opt.wrong .opt-text { color: #501313; }
-.opt.reveal-correct { background: #E1F5EE; border-color: #5DCAA5; }
-.opt.reveal-correct .ltr { background: #5DCAA5; border-color: #5DCAA5; color: white; }
-.opt.reveal-correct .opt-text { color: #085041; }
+.opt.wrong .badge { background: #E24B4A; border-color: #E24B4A; color: #fff; }
+.opt.wrong .opt-txt { color: #501313; }
+.opt.reveal { background: #E1F5EE; border-color: #5DCAA5; }
+.opt.reveal .badge { background: #5DCAA5; border-color: #5DCAA5; color: #fff; }
+.opt.reveal .opt-txt { color: #085041; }
 .opt:disabled { cursor: default; }
-.feedback { height: 40px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 500; border-radius: var(--border-radius-md); margin-bottom: 1rem; opacity: 0; transition: opacity 0.2s ease; }
-.feedback.show { opacity: 1; }
-.feedback.ok { background: #E1F5EE; color: #085041; }
-.feedback.no { background: #FCEBEB; color: #501313; }
-.controls { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-.btn { display: flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-primary); font-size: 14px; cursor: pointer; transition: all 0.15s; font-family: var(--font-sans); }
+.feedback-bar { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: var(--border-radius-md); margin-bottom: 1.25rem; font-size: 14px; font-weight: 500; opacity: 0; transition: opacity 0.2s; }
+.feedback-bar.show { opacity: 1; }
+.feedback-bar.ok { background: #E1F5EE; color: #085041; }
+.feedback-bar.no { background: #FCEBEB; color: #501313; }
+.nav-row { display: flex; align-items: center; justify-content: space-between; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-primary); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.12s; }
 .btn:hover:not(:disabled) { background: var(--color-background-secondary); }
 .btn:active:not(:disabled) { transform: scale(0.98); }
-.btn:disabled { opacity: 0.35; cursor: default; }
-.btn-green { background: #1D9E75; border-color: #1D9E75; color: white; }
-.btn-green:hover:not(:disabled) { background: #0F6E56; border-color: #0F6E56; }
-.end-screen { text-align: center; padding: 2rem 0; }
-.end-icon { font-size: 52px; margin-bottom: 1rem; }
-.end-score { font-size: 52px; font-weight: 500; color: #1D9E75; margin-bottom: 0.25rem; }
-.end-title { font-size: 20px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 0.5rem; }
-.end-sub { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 1.5rem; }
-.end-btns { display: flex; gap: 10px; justify-content: center; }
-.review-list { margin-top: 1.5rem; }
-.review-item { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1rem; margin-bottom: 10px; background: var(--color-background-primary); }
-.review-q { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
-.review-ans { font-size: 13px; }
-.review-ans .ok { color: #1D9E75; }
-.review-ans .no { color: #E24B4A; }
+.btn:disabled { opacity: 0.3; cursor: default; }
+.btn-primary { background: #1D9E75; border-color: #1D9E75; color: #fff; }
+.btn-primary:hover:not(:disabled) { background: #0F6E56; border-color: #0F6E56; }
+.end-screen { text-align: center; padding: 3rem 0; }
+.end-score-ring { width: 120px; height: 120px; border-radius: 50%; border: 3px solid #1D9E75; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 1.5rem; }
+.end-score-num { font-family: 'Playfair Display', serif; font-size: 36px; color: #1D9E75; line-height: 1; }
+.end-score-sub { font-size: 11px; color: var(--color-text-tertiary); letter-spacing: 0.05em; text-transform: uppercase; }
+.end-title { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--color-text-primary); margin-bottom: 0.5rem; }
+.end-detail { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 2rem; }
+.end-btns { display: flex; gap: 10px; justify-content: center; margin-bottom: 2rem; }
+.review-header { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+.review-card { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1rem 1.25rem; margin-bottom: 8px; background: var(--color-background-primary); text-align: left; }
+.review-q { font-family: 'Playfair Display', serif; font-size: 14px; color: var(--color-text-primary); margin-bottom: 8px; line-height: 1.5; }
+.review-row { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; margin-top: 4px; }
+.review-row .dot { width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
+.dot-ok { background: #1D9E75; color: white; }
+.dot-no { background: #E24B4A; color: white; }
+.review-row .txt-ok { color: #085041; }
+.review-row .txt-no { color: #501313; }
 </style>
-
 <h2 class="sr-only">Trắc nghiệm tài chính — 32 câu về hệ số và chỉ tiêu tài chính</h2>
-
-<div id="app">
-  <div class="header">
-    <span class="title">Trắc nghiệm Tài chính</span>
-    <span class="counter-pill" id="counter">1 / 32</span>
+<div id="root">
+  <div class="quiz-header">
+    <div class="quiz-brand"><span>Ôn thi</span>Tài chính</div>
+    <div style="text-align:right; padding-top:6px;">
+      <div style="font-size:22px; font-weight:500; color:var(--color-text-primary); font-family:'Playfair Display',serif;" id="counter-big">01</div>
+      <div style="font-size:12px; color:var(--color-text-tertiary);">/ <span id="total-lbl">32</span></div>
+    </div>
   </div>
-  <div class="progress-bar"><div class="progress-fill" id="pbar" style="width:0%"></div></div>
-  <div class="stats-row">
-    <div class="stat"><div class="stat-val" id="sv-total">32</div><div class="stat-lbl">Tổng câu</div></div>
-    <div class="stat"><div class="stat-val g" id="sv-cor">0</div><div class="stat-lbl">Đúng</div></div>
-    <div class="stat"><div class="stat-val r" id="sv-wrg">0</div><div class="stat-lbl">Sai</div></div>
+  <div class="pbar-wrap">
+    <div class="pbar-track"><div class="pbar-fill" id="pbar" style="width:0%"></div></div>
+    <div class="pbar-label" id="pbar-label">0%</div>
+  </div>
+  <div class="stats-strip">
+    <div class="stat-chip">
+      <i class="ti ti-list-numbers" aria-hidden="true"></i>
+      <div><div class="val" id="sv-total">32</div><div class="lbl">Tổng câu</div></div>
+    </div>
+    <div class="stat-chip green">
+      <i class="ti ti-check" aria-hidden="true"></i>
+      <div><div class="val" id="sv-cor">0</div><div class="lbl">Đúng</div></div>
+    </div>
+    <div class="stat-chip red">
+      <i class="ti ti-x" aria-hidden="true"></i>
+      <div><div class="val" id="sv-wrg">0</div><div class="lbl">Sai</div></div>
+    </div>
   </div>
 
   <div id="quiz-view">
-    <div class="q-card">
-      <div class="q-num" id="qnum">Câu 1</div>
-      <div class="q-text" id="qtext"></div>
-      <div class="options" id="opts"></div>
+    <div class="q-block">
+      <div class="q-top">
+        <div class="q-tag" id="q-tag">Câu 1</div>
+        <div class="q-text" id="q-text"></div>
+      </div>
+      <div class="q-opts" id="q-opts"></div>
     </div>
-    <div class="feedback" id="fb"></div>
-    <div class="controls">
+    <div class="feedback-bar" id="fb"></div>
+    <div class="nav-row">
       <button class="btn" id="btn-prev" onclick="go(-1)"><i class="ti ti-arrow-left" aria-hidden="true"></i> Trước</button>
-      <button class="btn btn-green" id="btn-next" onclick="go(1)" disabled>Tiếp <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+      <button class="btn btn-primary" id="btn-next" onclick="go(1)" disabled>Tiếp theo <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
     </div>
   </div>
 
   <div id="end-view" style="display:none;" class="end-screen">
-    <div class="end-icon" id="end-icon">🎉</div>
-    <div class="end-score" id="end-score"></div>
-    <div class="end-title">Hoàn thành bài thi!</div>
-    <div class="end-sub" id="end-sub"></div>
-    <div class="end-btns">
-      <button class="btn" onclick="restart(false)"><i class="ti ti-refresh" aria-hidden="true"></i> Làm lại</button>
-      <button class="btn btn-green" onclick="restart(true)" id="btn-wrong-only"><i class="ti ti-x" aria-hidden="true"></i> Ôn sai</button>
+    <div class="end-score-ring">
+      <div class="end-score-num" id="end-pct">—</div>
+      <div class="end-score-sub">điểm</div>
     </div>
-    <div class="review-list" id="review-list"></div>
+    <div class="end-title" id="end-title">Hoàn thành!</div>
+    <div class="end-detail" id="end-detail"></div>
+    <div class="end-btns">
+      <button class="btn" onclick="restart(false)"><i class="ti ti-refresh" aria-hidden="true"></i> Làm lại từ đầu</button>
+      <button class="btn btn-primary" id="btn-review-wrong" onclick="restart(true)"><i class="ti ti-list-check" aria-hidden="true"></i> Ôn câu sai</button>
+    </div>
+    <div id="review-box"></div>
   </div>
 </div>
 
 <script>
-const ALL = [{"Câu hỏi":"Công thức của hệ số thanh toán hiện hành là gì?","Options":{"A":"Tổng tài sản / Tổng nợ phải trả","B":"(TSNH - HTK) / Nợ ngắn hạn","C":"TSNH / Nợ ngắn hạn","D":"Tiền và các khoản tương đương tiền / Nợ ngắn hạn"},"Answer":"C"},{"Câu hỏi":"Công thức của hệ số thanh toán nhanh là gì?","Options":{"A":"TSNH / Nợ ngắn hạn","B":"(TSNH - HTK) / Nợ ngắn hạn","C":"Tổng tài sản / Tổng nợ phải trả","D":"Tiền và các khoản tương đương tiền / Tổng nợ phải trả"},"Answer":"B"},{"Câu hỏi":"Công thức của hệ số thanh toán tức thời là gì?","Options":{"A":"Tiền và các khoản tương đương tiền / Tổng nợ ngắn hạn","B":"TSNH / Tổng nợ phải trả","C":"(TSNH - HTK) / Tổng tài sản","D":"Tổng tài sản / Nợ ngắn hạn"},"Answer":"A"},{"Câu hỏi":"Công thức của hệ số thanh toán tổng quát là gì?","Options":{"A":"TSNH / Nợ ngắn hạn","B":"(TSNH - HTK) / Nợ ngắn hạn","C":"Tiền và các khoản tương đương tiền / Nợ ngắn hạn","D":"Tổng tài sản / Tổng nợ phải trả"},"Answer":"D"},{"Câu hỏi":"Công thức của hệ số tự tài trợ là gì?","Options":{"A":"VCSH / Tổng tài sản","B":"Tổng nợ / Tổng tài sản","C":"VCSH / TSDH","D":"NVDH / TSDH"},"Answer":"A"},{"Câu hỏi":"Công thức của hệ số nợ là gì?","Options":{"A":"VCSH / Tổng tài sản","B":"Tổng nợ / Tổng tài sản","C":"Tổng tài sản / Tổng nợ","D":"Nợ ngắn hạn / TSNH"},"Answer":"B"},{"Câu hỏi":"Công thức của nguồn vốn dài hạn là gì?","Options":{"A":"VCSH + Nợ dài hạn","B":"TSNH - Nợ ngắn hạn","C":"Tổng nợ / Tổng tài sản","D":"EBIT / Chi phí lãi vay"},"Answer":"A"},{"Câu hỏi":"Công thức của hệ số tài trợ thường xuyên là gì?","Options":{"A":"VCSH / Tổng tài sản","B":"Tổng nợ / Tổng tài sản","C":"NVDH / TSDH","D":"VCSH / TSDH"},"Answer":"C"},{"Câu hỏi":"Công thức của tỉ số tự tài trợ TSDH là gì?","Options":{"A":"VCSH / TSDH","B":"NVDH / TSDH","C":"Tổng nợ / Tổng tài sản","D":"TSNH - Nợ ngắn hạn"},"Answer":"A"},{"Câu hỏi":"Công thức của hệ số tự tài trợ TSCĐ là gì?","Options":{"A":"VCSH / TSCĐ","B":"VCSH / TSDH","C":"NVDH / TSDH","D":"Tổng nợ / TSCĐ"},"Answer":"A"},{"Câu hỏi":"Công thức của vốn lưu động ròng là gì?","Options":{"A":"TSNH - Nợ ngắn hạn","B":"NVDH - TSDH","C":"VCSH + Nợ dài hạn","D":"Cả A và B đều đúng"},"Answer":"D"},{"Câu hỏi":"Công thức của khả năng trả lãi vay là gì?","Options":{"A":"EBIT / Chi phí lãi vay","B":"Chi phí lãi vay / EBIT","C":"Tổng nợ / Tổng tài sản","D":"VCSH / Tổng tài sản"},"Answer":"A"},{"Câu hỏi":"Công thức của tỷ suất lợi nhuận gộp là gì?","Options":{"A":"Lợi nhuận gộp / Doanh thu thuần","B":"Lợi nhuận sau thuế / Doanh thu thuần","C":"EBIT / Tổng tài sản bình quân","D":"Lợi nhuận sau thuế / VCSH bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của ROS là gì?","Options":{"A":"Lợi nhuận sau thuế / Tổng tài sản bình quân","B":"Lợi nhuận sau thuế / VCSH bình quân","C":"Lợi nhuận sau thuế / Doanh thu thuần","D":"EBIT / Doanh thu thuần"},"Answer":"C"},{"Câu hỏi":"Công thức của ROA là gì?","Options":{"A":"Lợi nhuận sau thuế / Doanh thu thuần","B":"Lợi nhuận sau thuế / Tổng tài sản bình quân","C":"Lợi nhuận sau thuế / VCSH bình quân","D":"EBIT / Tổng tài sản bình quân"},"Answer":"B"},{"Câu hỏi":"Công thức của ROE là gì?","Options":{"A":"Lợi nhuận sau thuế / Tổng tài sản bình quân","B":"EBIT / Tổng tài sản bình quân","C":"Lợi nhuận gộp / Doanh thu thuần","D":"Lợi nhuận sau thuế / VCSH bình quân"},"Answer":"D"},{"Câu hỏi":"Công thức của BEP là gì?","Options":{"A":"EBIT / Tổng tài sản bình quân","B":"Lợi nhuận sau thuế / Doanh thu thuần","C":"Lợi nhuận sau thuế / VCSH bình quân","D":"Lợi nhuận gộp / Doanh thu thuần"},"Answer":"A"},{"Câu hỏi":"Công thức ROE theo mô hình Dupont là gì?","Options":{"A":"ROE = ROS × Vòng quay tổng tài sản × Đòn bẩy tài chính","B":"ROE = LNST / Tổng tài sản bình quân","C":"ROE = EBIT / Tổng tài sản bình quân","D":"ROE = LNST / Doanh thu thuần"},"Answer":"A"},{"Câu hỏi":"Công thức của vòng quay tổng tài sản là gì?","Options":{"A":"Doanh thu / Tổng tài sản bình quân","B":"Tổng tài sản bình quân / Doanh thu","C":"LNST / Tổng tài sản bình quân","D":"Doanh thu / VCSH bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của đòn bẩy tài chính là gì?","Options":{"A":"Tổng tài sản bình quân / VCSH bình quân","B":"VCSH bình quân / Tổng tài sản bình quân","C":"Tổng nợ / Tổng tài sản","D":"LNST / VCSH bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của ROCE là gì?","Options":{"A":"(LNST - Cổ tức ưu đãi) / Vốn cổ phần thường bình quân","B":"LNST / Tổng tài sản bình quân","C":"EBIT / Tổng tài sản bình quân","D":"LNST / Doanh thu thuần"},"Answer":"A"},{"Câu hỏi":"Công thức của EPS là gì?","Options":{"A":"(LNST - Cổ tức ưu đãi) / Số cổ phiếu thường lưu hành bình quân","B":"Giá thị trường cổ phiếu / EPS","C":"LNST / Tổng tài sản bình quân","D":"LNST / VCSH bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của P/E là gì?","Options":{"A":"Giá thị trường cổ phiếu / EPS","B":"EPS / Giá thị trường cổ phiếu","C":"LNST / Số cổ phiếu thường lưu hành bình quân","D":"Doanh thu / Tổng tài sản bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của hiệu suất sử dụng tổng tài sản là gì?","Options":{"A":"Doanh thu thuần / Tổng tài sản bình quân","B":"Doanh thu thuần / Tổng TSNH bình quân","C":"Giá vốn hàng bán / Hàng tồn kho bình quân","D":"365 / Vòng quay hàng tồn kho"},"Answer":"A"},{"Câu hỏi":"Công thức của hiệu suất sử dụng tài sản ngắn hạn là gì?","Options":{"A":"Doanh thu thuần / Tổng tài sản bình quân","B":"Doanh thu thuần / Tổng TSNH bình quân","C":"Giá vốn hàng bán / Hàng tồn kho bình quân","D":"Doanh thu thuần / Phải thu bình quân"},"Answer":"B"},{"Câu hỏi":"Công thức của vòng quay hàng tồn kho là gì?","Options":{"A":"Doanh thu thuần / Hàng tồn kho bình quân","B":"365 / Vòng quay hàng tồn kho","C":"Giá vốn hàng bán / Hàng tồn kho bình quân","D":"Hàng tồn kho bình quân / Giá vốn hàng bán"},"Answer":"C"},{"Câu hỏi":"Công thức của số ngày tồn kho là gì?","Options":{"A":"365 / Vòng quay hàng tồn kho","B":"Vòng quay hàng tồn kho / 365","C":"Giá vốn hàng bán / Hàng tồn kho bình quân","D":"365 / Vòng quay phải thu"},"Answer":"A"},{"Câu hỏi":"Công thức của vòng quay phải thu là gì?","Options":{"A":"Doanh thu thuần / Phải thu bình quân","B":"Giá vốn hàng bán / Phải trả người bán bình quân","C":"365 / Vòng quay phải thu","D":"Phải thu bình quân / Doanh thu thuần"},"Answer":"A"},{"Câu hỏi":"Công thức của kỳ thu tiền bình quân là gì?","Options":{"A":"365 / Vòng quay hàng tồn kho","B":"365 / Vòng quay phải thu","C":"365 / Vòng quay phải trả người bán","D":"Doanh thu thuần / Phải thu bình quân"},"Answer":"B"},{"Câu hỏi":"Công thức của vòng quay phải trả người bán là gì?","Options":{"A":"Doanh thu thuần / Phải trả người bán bình quân","B":"Giá vốn hàng bán / Phải trả người bán bình quân","C":"365 / Vòng quay phải trả người bán","D":"Phải trả người bán bình quân / Giá vốn hàng bán"},"Answer":"B"},{"Câu hỏi":"Công thức của số ngày phải trả tiền bình quân là gì?","Options":{"A":"365 / Vòng quay phải trả người bán","B":"365 / Vòng quay phải thu","C":"365 / Vòng quay hàng tồn kho","D":"Giá vốn hàng bán / Phải trả người bán bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của chu kỳ chuyển đổi tiền mặt (CCC) là gì?","Options":{"A":"Số ngày tồn kho + Kỳ thu tiền bình quân - Số ngày phải trả tiền bình quân","B":"Số ngày tồn kho - Kỳ thu tiền bình quân + Số ngày phải trả tiền bình quân","C":"Kỳ thu tiền bình quân + Số ngày phải trả tiền bình quân - Số ngày tồn kho","D":"365 / Vòng quay hàng tồn kho"},"Answer":"A"}];
+const ALL=[{"Câu hỏi":"Công thức của hệ số thanh toán hiện hành là gì?","Options":{"A":"Tổng tài sản / Tổng nợ phải trả","B":"(TSNH - HTK) / Nợ ngắn hạn","C":"TSNH / Nợ ngắn hạn","D":"Tiền và các khoản tương đương tiền / Nợ ngắn hạn"},"Answer":"C"},{"Câu hỏi":"Công thức của hệ số thanh toán nhanh là gì?","Options":{"A":"TSNH / Nợ ngắn hạn","B":"(TSNH - HTK) / Nợ ngắn hạn","C":"Tổng tài sản / Tổng nợ phải trả","D":"Tiền và các khoản tương đương tiền / Tổng nợ phải trả"},"Answer":"B"},{"Câu hỏi":"Công thức của hệ số thanh toán tức thời là gì?","Options":{"A":"Tiền và các khoản tương đương tiền / Tổng nợ ngắn hạn","B":"TSNH / Tổng nợ phải trả","C":"(TSNH - HTK) / Tổng tài sản","D":"Tổng tài sản / Nợ ngắn hạn"},"Answer":"A"},{"Câu hỏi":"Công thức của hệ số thanh toán tổng quát là gì?","Options":{"A":"TSNH / Nợ ngắn hạn","B":"(TSNH - HTK) / Nợ ngắn hạn","C":"Tiền và các khoản tương đương tiền / Nợ ngắn hạn","D":"Tổng tài sản / Tổng nợ phải trả"},"Answer":"D"},{"Câu hỏi":"Công thức của hệ số tự tài trợ là gì?","Options":{"A":"VCSH / Tổng tài sản","B":"Tổng nợ / Tổng tài sản","C":"VCSH / TSDH","D":"NVDH / TSDH"},"Answer":"A"},{"Câu hỏi":"Công thức của hệ số nợ là gì?","Options":{"A":"VCSH / Tổng tài sản","B":"Tổng nợ / Tổng tài sản","C":"Tổng tài sản / Tổng nợ","D":"Nợ ngắn hạn / TSNH"},"Answer":"B"},{"Câu hỏi":"Công thức của nguồn vốn dài hạn là gì?","Options":{"A":"VCSH + Nợ dài hạn","B":"TSNH - Nợ ngắn hạn","C":"Tổng nợ / Tổng tài sản","D":"EBIT / Chi phí lãi vay"},"Answer":"A"},{"Câu hỏi":"Công thức của hệ số tài trợ thường xuyên là gì?","Options":{"A":"VCSH / Tổng tài sản","B":"Tổng nợ / Tổng tài sản","C":"NVDH / TSDH","D":"VCSH / TSDH"},"Answer":"C"},{"Câu hỏi":"Công thức của tỉ số tự tài trợ TSDH là gì?","Options":{"A":"VCSH / TSDH","B":"NVDH / TSDH","C":"Tổng nợ / Tổng tài sản","D":"TSNH - Nợ ngắn hạn"},"Answer":"A"},{"Câu hỏi":"Công thức của hệ số tự tài trợ TSCĐ là gì?","Options":{"A":"VCSH / TSCĐ","B":"VCSH / TSDH","C":"NVDH / TSDH","D":"Tổng nợ / TSCĐ"},"Answer":"A"},{"Câu hỏi":"Công thức của vốn lưu động ròng là gì?","Options":{"A":"TSNH - Nợ ngắn hạn","B":"NVDH - TSDH","C":"VCSH + Nợ dài hạn","D":"Cả A và B đều đúng"},"Answer":"D"},{"Câu hỏi":"Công thức của khả năng trả lãi vay là gì?","Options":{"A":"EBIT / Chi phí lãi vay","B":"Chi phí lãi vay / EBIT","C":"Tổng nợ / Tổng tài sản","D":"VCSH / Tổng tài sản"},"Answer":"A"},{"Câu hỏi":"Công thức của tỷ suất lợi nhuận gộp là gì?","Options":{"A":"Lợi nhuận gộp / Doanh thu thuần","B":"Lợi nhuận sau thuế / Doanh thu thuần","C":"EBIT / Tổng tài sản bình quân","D":"Lợi nhuận sau thuế / VCSH bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của ROS là gì?","Options":{"A":"Lợi nhuận sau thuế / Tổng tài sản bình quân","B":"Lợi nhuận sau thuế / VCSH bình quân","C":"Lợi nhuận sau thuế / Doanh thu thuần","D":"EBIT / Doanh thu thuần"},"Answer":"C"},{"Câu hỏi":"Công thức của ROA là gì?","Options":{"A":"Lợi nhuận sau thuế / Doanh thu thuần","B":"Lợi nhuận sau thuế / Tổng tài sản bình quân","C":"Lợi nhuận sau thuế / VCSH bình quân","D":"EBIT / Tổng tài sản bình quân"},"Answer":"B"},{"Câu hỏi":"Công thức của ROE là gì?","Options":{"A":"Lợi nhuận sau thuế / Tổng tài sản bình quân","B":"EBIT / Tổng tài sản bình quân","C":"Lợi nhuận gộp / Doanh thu thuần","D":"Lợi nhuận sau thuế / VCSH bình quân"},"Answer":"D"},{"Câu hỏi":"Công thức của BEP là gì?","Options":{"A":"EBIT / Tổng tài sản bình quân","B":"Lợi nhuận sau thuế / Doanh thu thuần","C":"Lợi nhuận sau thuế / VCSH bình quân","D":"Lợi nhuận gộp / Doanh thu thuần"},"Answer":"A"},{"Câu hỏi":"Công thức ROE theo mô hình Dupont là gì?","Options":{"A":"ROE = ROS × Vòng quay tổng tài sản × Đòn bẩy tài chính","B":"ROE = LNST / Tổng tài sản bình quân","C":"ROE = EBIT / Tổng tài sản bình quân","D":"ROE = LNST / Doanh thu thuần"},"Answer":"A"},{"Câu hỏi":"Công thức của vòng quay tổng tài sản là gì?","Options":{"A":"Doanh thu / Tổng tài sản bình quân","B":"Tổng tài sản bình quân / Doanh thu","C":"LNST / Tổng tài sản bình quân","D":"Doanh thu / VCSH bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của đòn bẩy tài chính là gì?","Options":{"A":"Tổng tài sản bình quân / VCSH bình quân","B":"VCSH bình quân / Tổng tài sản bình quân","C":"Tổng nợ / Tổng tài sản","D":"LNST / VCSH bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của ROCE là gì?","Options":{"A":"(LNST - Cổ tức ưu đãi) / Vốn cổ phần thường bình quân","B":"LNST / Tổng tài sản bình quân","C":"EBIT / Tổng tài sản bình quân","D":"LNST / Doanh thu thuần"},"Answer":"A"},{"Câu hỏi":"Công thức của EPS là gì?","Options":{"A":"(LNST - Cổ tức ưu đãi) / Số cổ phiếu thường lưu hành bình quân","B":"Giá thị trường cổ phiếu / EPS","C":"LNST / Tổng tài sản bình quân","D":"LNST / VCSH bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của P/E là gì?","Options":{"A":"Giá thị trường cổ phiếu / EPS","B":"EPS / Giá thị trường cổ phiếu","C":"LNST / Số cổ phiếu thường lưu hành bình quân","D":"Doanh thu / Tổng tài sản bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của hiệu suất sử dụng tổng tài sản là gì?","Options":{"A":"Doanh thu thuần / Tổng tài sản bình quân","B":"Doanh thu thuần / Tổng TSNH bình quân","C":"Giá vốn hàng bán / Hàng tồn kho bình quân","D":"365 / Vòng quay hàng tồn kho"},"Answer":"A"},{"Câu hỏi":"Công thức của hiệu suất sử dụng tài sản ngắn hạn là gì?","Options":{"A":"Doanh thu thuần / Tổng tài sản bình quân","B":"Doanh thu thuần / Tổng TSNH bình quân","C":"Giá vốn hàng bán / Hàng tồn kho bình quân","D":"Doanh thu thuần / Phải thu bình quân"},"Answer":"B"},{"Câu hỏi":"Công thức của vòng quay hàng tồn kho là gì?","Options":{"A":"Doanh thu thuần / Hàng tồn kho bình quân","B":"365 / Vòng quay hàng tồn kho","C":"Giá vốn hàng bán / Hàng tồn kho bình quân","D":"Hàng tồn kho bình quân / Giá vốn hàng bán"},"Answer":"C"},{"Câu hỏi":"Công thức của số ngày tồn kho là gì?","Options":{"A":"365 / Vòng quay hàng tồn kho","B":"Vòng quay hàng tồn kho / 365","C":"Giá vốn hàng bán / Hàng tồn kho bình quân","D":"365 / Vòng quay phải thu"},"Answer":"A"},{"Câu hỏi":"Công thức của vòng quay phải thu là gì?","Options":{"A":"Doanh thu thuần / Phải thu bình quân","B":"Giá vốn hàng bán / Phải trả người bán bình quân","C":"365 / Vòng quay phải thu","D":"Phải thu bình quân / Doanh thu thuần"},"Answer":"A"},{"Câu hỏi":"Công thức của kỳ thu tiền bình quân là gì?","Options":{"A":"365 / Vòng quay hàng tồn kho","B":"365 / Vòng quay phải thu","C":"365 / Vòng quay phải trả người bán","D":"Doanh thu thuần / Phải thu bình quân"},"Answer":"B"},{"Câu hỏi":"Công thức của vòng quay phải trả người bán là gì?","Options":{"A":"Doanh thu thuần / Phải trả người bán bình quân","B":"Giá vốn hàng bán / Phải trả người bán bình quân","C":"365 / Vòng quay phải trả người bán","D":"Phải trả người bán bình quân / Giá vốn hàng bán"},"Answer":"B"},{"Câu hỏi":"Công thức của số ngày phải trả tiền bình quân là gì?","Options":{"A":"365 / Vòng quay phải trả người bán","B":"365 / Vòng quay phải thu","C":"365 / Vòng quay hàng tồn kho","D":"Giá vốn hàng bán / Phải trả người bán bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của chu kỳ chuyển đổi tiền mặt (CCC) là gì?","Options":{"A":"Số ngày tồn kho + Kỳ thu tiền bình quân - Số ngày phải trả tiền bình quân","B":"Số ngày tồn kho - Kỳ thu tiền bình quân + Số ngày phải trả tiền bình quân","C":"Kỳ thu tiền bình quân + Số ngày phải trả tiền bình quân - Số ngày tồn kho","D":"365 / Vòng quay hàng tồn kho"},"Answer":"A"}];
 
-let deck = [...ALL];
-let idx = 0, cor = 0, wrg = 0;
-let results = new Array(ALL.length).fill(null);
-let answered = false;
+let deck=[...ALL], idx=0, cor=0, wrg=0, answered=false;
+let results=new Array(ALL.length).fill(null);
 
-function render() {
-  if (idx >= deck.length) { showEnd(); return; }
-  answered = false;
-  const q = deck[idx];
-  const total = deck.length;
-  document.getElementById('counter').textContent = (idx+1) + ' / ' + total;
-  document.getElementById('pbar').style.width = Math.round(idx/total*100) + '%';
-  document.getElementById('qnum').textContent = 'Câu ' + (idx+1);
-  document.getElementById('qtext').textContent = q['Câu hỏi'];
-  const fb = document.getElementById('fb');
-  fb.className = 'feedback'; fb.textContent = '';
-  document.getElementById('btn-next').disabled = true;
-  document.getElementById('btn-prev').disabled = idx === 0;
-  const opts = document.getElementById('opts');
-  opts.innerHTML = '';
-  Object.entries(q['Options']).forEach(([k, v]) => {
-    const btn = document.createElement('button');
-    btn.className = 'opt';
-    btn.innerHTML = '<span class="ltr">' + k + '</span><span class="opt-text">' + v + '</span>';
-    btn.onclick = () => pick(k, q['Answer']);
+function render(){
+  if(idx>=deck.length){showEnd();return;}
+  answered=false;
+  const q=deck[idx],total=deck.length;
+  const n=String(idx+1).padStart(2,'0');
+  document.getElementById('counter-big').textContent=n;
+  document.getElementById('total-lbl').textContent=total;
+  document.getElementById('pbar').style.width=Math.round(idx/total*100)+'%';
+  document.getElementById('pbar-label').textContent=Math.round(idx/total*100)+'%';
+  document.getElementById('q-tag').textContent='Câu '+(idx+1)+' / '+total;
+  document.getElementById('q-text').textContent=q['Câu hỏi'];
+  const fb=document.getElementById('fb');
+  fb.className='feedback-bar';fb.innerHTML='';
+  document.getElementById('btn-next').disabled=true;
+  document.getElementById('btn-prev').disabled=idx===0;
+  const opts=document.getElementById('q-opts');
+  opts.innerHTML='';
+  Object.entries(q['Options']).forEach(([k,v])=>{
+    const btn=document.createElement('button');
+    btn.className='opt';
+    btn.innerHTML='<span class="badge">'+k+'</span><span class="opt-txt">'+v+'</span>';
+    btn.onclick=()=>pick(k,q['Answer']);
     opts.appendChild(btn);
   });
 }
 
-function pick(chosen, ans) {
-  if (answered) return;
-  answered = true;
-  const isOk = chosen === ans;
-  if (isOk) cor++; else wrg++;
-  results[idx] = { q: deck[idx], chosen, ans, ok: isOk };
-  document.getElementById('sv-cor').textContent = cor;
-  document.getElementById('sv-wrg').textContent = wrg;
-  const btns = document.querySelectorAll('.opt');
-  btns.forEach(b => {
-    b.disabled = true;
-    const ltr = b.querySelector('.ltr').textContent;
-    if (ltr === ans) b.classList.add(chosen === ans ? 'correct' : 'reveal-correct');
-    else if (ltr === chosen && !isOk) b.classList.add('wrong');
+function pick(chosen,ans){
+  if(answered)return;
+  answered=true;
+  const isOk=chosen===ans;
+  if(isOk)cor++;else wrg++;
+  results[idx]={q:deck[idx],chosen,ans,ok:isOk};
+  document.getElementById('sv-cor').textContent=cor;
+  document.getElementById('sv-wrg').textContent=wrg;
+  document.querySelectorAll('.opt').forEach(b=>{
+    b.disabled=true;
+    const ltr=b.querySelector('.badge').textContent;
+    if(ltr===ans) b.classList.add(chosen===ans?'correct':'reveal');
+    else if(ltr===chosen&&!isOk) b.classList.add('wrong');
   });
-  const fb = document.getElementById('fb');
-  if (isOk) { fb.textContent = '✓ Chính xác!'; fb.className = 'feedback ok show'; }
-  else { fb.textContent = '✗ Sai rồi! Đáp án đúng: ' + ans; fb.className = 'feedback no show'; }
-  document.getElementById('btn-next').disabled = false;
+  const fb=document.getElementById('fb');
+  if(isOk){
+    fb.innerHTML='<i class="ti ti-circle-check" style="font-size:18px;color:#1D9E75" aria-hidden="true"></i> Chính xác!';
+    fb.className='feedback-bar ok show';
+  } else {
+    fb.innerHTML='<i class="ti ti-circle-x" style="font-size:18px;color:#E24B4A" aria-hidden="true"></i> Sai rồi — đáp án đúng là <strong>'+ans+'</strong>';
+    fb.className='feedback-bar no show';
+  }
+  document.getElementById('btn-next').disabled=false;
 }
 
-function go(dir) {
-  idx += dir;
-  if (idx < 0) idx = 0;
+function go(dir){
+  idx+=dir;
+  if(idx<0)idx=0;
   render();
 }
 
-function showEnd() {
-  document.getElementById('quiz-view').style.display = 'none';
-  document.getElementById('end-view').style.display = 'block';
-  document.getElementById('pbar').style.width = '100%';
-  const total = deck.length;
-  const pct = Math.round(cor / total * 100);
-  document.getElementById('end-score').textContent = pct + '%';
-  const icon = pct >= 80 ? '🎉' : pct >= 60 ? '📚' : '💪';
-  document.getElementById('end-icon').textContent = icon;
-  document.getElementById('end-sub').textContent = 'Đúng ' + cor + '/' + total + ' câu · Sai ' + wrg + ' câu';
-  const wrongResults = results.filter(r => r && !r.ok);
-  document.getElementById('btn-wrong-only').disabled = wrongResults.length === 0;
-  const rl = document.getElementById('review-list');
-  rl.innerHTML = '';
-  if (wrongResults.length > 0) {
-    const h = document.createElement('div');
-    h.style.cssText = 'font-size:14px;font-weight:500;color:var(--color-text-secondary);margin-bottom:10px;';
-    h.textContent = 'Câu sai (' + wrongResults.length + ')';
-    rl.appendChild(h);
-    wrongResults.forEach(r => {
-      const item = document.createElement('div');
-      item.className = 'review-item';
-      item.innerHTML = '<div class="review-q">' + r.q['Câu hỏi'] + '</div>' +
-        '<div class="review-ans"><span class="no">✗ Bạn chọn ' + r.chosen + ': ' + r.q['Options'][r.chosen] + '</span></div>' +
-        '<div class="review-ans" style="margin-top:4px;"><span class="ok">✓ Đáp án: ' + r.ans + ': ' + r.q['Options'][r.ans] + '</span></div>';
-      rl.appendChild(item);
+function showEnd(){
+  document.getElementById('quiz-view').style.display='none';
+  document.getElementById('end-view').style.display='block';
+  document.getElementById('pbar').style.width='100%';
+  document.getElementById('pbar-label').textContent='100%';
+  const total=deck.length,pct=Math.round(cor/total*100);
+  document.getElementById('end-pct').textContent=pct+'%';
+  const titles=pct>=80?'Xuất sắc!':pct>=60?'Khá tốt!':'Cần ôn thêm!';
+  document.getElementById('end-title').textContent=titles;
+  document.getElementById('end-detail').textContent='Đúng '+cor+' / '+total+' câu · Sai '+wrg+' câu';
+  const wrongList=results.filter(r=>r&&!r.ok);
+  document.getElementById('btn-review-wrong').disabled=wrongList.length===0;
+  const box=document.getElementById('review-box');
+  box.innerHTML='';
+  if(wrongList.length>0){
+    const h=document.createElement('div');
+    h.className='review-header';h.textContent='Câu sai ('+wrongList.length+')';
+    box.appendChild(h);
+    wrongList.forEach(r=>{
+      const d=document.createElement('div');
+      d.className='review-card';
+      d.innerHTML='<div class="review-q">'+r.q['Câu hỏi']+'</div>'+
+        '<div class="review-row"><span class="dot dot-no"><i class="ti ti-x" style="font-size:9px" aria-hidden="true"></i></span><span class="txt-no">'+r.chosen+': '+r.q['Options'][r.chosen]+'</span></div>'+
+        '<div class="review-row"><span class="dot dot-ok"><i class="ti ti-check" style="font-size:9px" aria-hidden="true"></i></span><span class="txt-ok">'+r.ans+': '+r.q['Options'][r.ans]+'</span></div>';
+      box.appendChild(d);
     });
   }
 }
 
-function restart(wrongOnly) {
-  if (wrongOnly) {
-    const wrongCards = results.filter(r => r && !r.ok).map(r => r.q);
-    if (wrongCards.length === 0) return;
-    deck = wrongCards;
-    document.getElementById('sv-total').textContent = wrongCards.length;
+function restart(wrongOnly){
+  if(wrongOnly){
+    const w=results.filter(r=>r&&!r.ok).map(r=>r.q);
+    if(!w.length)return;
+    deck=w;document.getElementById('sv-total').textContent=w.length;
   } else {
-    deck = [...ALL];
-    document.getElementById('sv-total').textContent = ALL.length;
+    deck=[...ALL];document.getElementById('sv-total').textContent=ALL.length;
   }
-  idx = 0; cor = 0; wrg = 0;
-  results = new Array(deck.length).fill(null);
-  document.getElementById('sv-cor').textContent = 0;
-  document.getElementById('sv-wrg').textContent = 0;
-  document.getElementById('end-view').style.display = 'none';
-  document.getElementById('quiz-view').style.display = 'block';
+  idx=0;cor=0;wrg=0;
+  results=new Array(deck.length).fill(null);
+  document.getElementById('sv-cor').textContent=0;
+  document.getElementById('sv-wrg').textContent=0;
+  document.getElementById('end-view').style.display='none';
+  document.getElementById('quiz-view').style.display='block';
   render();
 }
 
