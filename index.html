@@ -298,12 +298,14 @@ function lev(a,b){
  *   "no nh"  → same after normVN → true ✓
  */
 function matchWithAbbrev(input, answerText) {
-  const inputTokens = input.trim().split(/\s+/).filter(Boolean);
+  // Replace operators (and parentheses) with spaces so "A/B" ≡ "A / B"
+  const opNorm = s => s.replace(/[+\-*/()]/g, ' ');
+  const inputTokens = opNorm(input).trim().split(/\s+/).filter(Boolean);
   if (!inputTokens.length) return false;
   // normVN each token; drop any that normalize to empty (e.g. pure punctuation)
   const ni = inputTokens.map(normVN).filter(Boolean);
   // Same treatment for answer: split by whitespace, normVN, drop empty
-  const na = answerText.trim().split(/\s+/).map(normVN).filter(Boolean);
+  const na = opNorm(answerText).trim().split(/\s+/).map(normVN).filter(Boolean);
   if (!ni.length || !na.length) return false;
 
   let ai = 0; // current position in answer word array
