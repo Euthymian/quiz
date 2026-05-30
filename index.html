@@ -1,53 +1,71 @@
-
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ôn thi Tài chính</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --bg:#0C0E11;
-  --s1:#13161A;
-  --s2:#1A1E24;
-  --s3:#22272F;
-  --bd:rgba(255,255,255,0.07);
-  --bdh:rgba(255,255,255,0.16);
-  --bda:rgba(0,212,160,0.35);
-  --bdr:rgba(255,72,72,0.35);
-  --acc:#00D4A0;
-  --accd:rgba(0,212,160,0.10);
-  --red:#FF4848;
-  --redd:rgba(255,72,72,0.10);
-  --t1:#EDEDED;
-  --t2:#7A808A;
-  --t3:#3E444D;
-  --tacc:#00BF8E;
-  --tred:#E03535;
+  --bg:#0C0E11;--s1:#13161A;--s2:#1A1E24;--s3:#22272F;
+  --bd:rgba(255,255,255,0.07);--bdh:rgba(255,255,255,0.16);
+  --bda:rgba(0,212,160,0.35);--bdr:rgba(255,72,72,0.35);
+  --acc:#00D4A0;--accd:rgba(0,212,160,0.10);
+  --red:#FF4848;--redd:rgba(255,72,72,0.10);
+  --t1:#EDEDED;--t2:#7A808A;--t3:#3E444D;
+  --tacc:#00BF8E;--tred:#E03535;
 }
-#shell{background:var(--bg);border-radius:14px;padding:2rem 1.75rem 2.5rem;font-family:'DM Sans',sans-serif;color:var(--t1);max-width:640px;margin:0 auto;}
+body{background:var(--bg);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:1.5rem 1rem;}
+#shell{background:var(--bg);border-radius:14px;padding:2rem 1.75rem 2.5rem;font-family:'DM Sans',sans-serif;color:var(--t1);width:100%;max-width:640px;}
 .hd{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.75rem;}
-.brand-sub{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--t2);margin-bottom:6px;}
+.brand-sub{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--t2);margin-bottom:6px;}
 .brand-name{font-family:'Playfair Display',serif;font-size:24px;color:var(--t1);}
 .num-block{text-align:right;}
 .num-big{font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--t1);line-height:1;}
 .num-of{font-family:'DM Mono',monospace;font-size:13px;color:var(--t3);margin-top:2px;}
 .pbar-row{display:flex;align-items:center;gap:12px;margin-bottom:1.75rem;}
 .pbar-track{flex:1;height:1px;background:var(--bd);position:relative;overflow:visible;}
-.pbar-fill{height:100%;background:var(--acc);transition:width 0.5s cubic-bezier(0.4,0,0.2,1);position:relative;}
+.pbar-fill{height:100%;background:var(--acc);transition:width .5s cubic-bezier(.4,0,.2,1);position:relative;}
 .pbar-fill::after{content:'';position:absolute;right:-3px;top:-2px;width:5px;height:5px;border-radius:50%;background:var(--acc);}
 .pbar-pct{font-family:'DM Mono',monospace;font-size:12px;color:var(--t2);min-width:36px;text-align:right;}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.75rem;}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1rem;}
 .sc{border:1px solid var(--bd);border-radius:10px;padding:12px 14px;background:var(--s1);}
 .sc-val{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--t1);}
 .sc-val.g{color:var(--acc);}
 .sc-val.r{color:var(--red);}
-.sc-lbl{font-size:11px;color:var(--t2);margin-top:3px;letter-spacing:0.04em;}
+.sc-lbl{font-size:11px;color:var(--t2);margin-top:3px;letter-spacing:.04em;}
+/* ── controls ── */
+.ctrl-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem;}
+.ctrl-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;border:1px solid var(--bd);background:transparent;color:var(--t2);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:border-color .15s,color .15s,background .15s;letter-spacing:.01em;}
+.ctrl-btn:hover{border-color:var(--bdh);color:var(--t1);background:var(--s2);}
+.ctrl-btn.on{border-color:var(--acc);color:var(--acc);background:var(--accd);}
+/* ── card ── */
 .q-card{border:1px solid var(--bd);border-radius:12px;overflow:hidden;margin-bottom:14px;background:var(--s1);}
 .q-head{padding:1.25rem 1.5rem;border-bottom:1px solid var(--bd);}
-.q-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--t3);letter-spacing:0.08em;margin-bottom:10px;}
+.q-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--t3);letter-spacing:.08em;margin-bottom:10px;}
 .q-txt{font-family:'Playfair Display',serif;font-size:17px;line-height:1.65;color:var(--t1);}
+/* ── write mode ── */
+.write-wrap{padding:14px 12px 10px;display:flex;flex-direction:column;gap:8px;}
+.write-lbl{font-family:'DM Mono',monospace;font-size:10px;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;padding:0 4px;}
+.write-row{display:flex;gap:8px;}
+.write-input{flex:1;background:var(--s2);border:1px solid var(--bd);border-radius:9px;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--t1);outline:none;transition:border-color .2s,background .2s;min-width:0;}
+.write-input:focus{border-color:rgba(255,255,255,.2);}
+.write-input::placeholder{color:var(--t3);}
+.write-input.ok{border-color:var(--bda)!important;background:var(--accd);color:var(--acc);}
+.write-input.no{border-color:var(--bdr)!important;background:var(--redd);color:var(--red);}
+.write-input:disabled{cursor:default;}
+.btn-chk{padding:12px 16px;border-radius:9px;border:1px solid var(--acc);background:transparent;color:var(--acc);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0;}
+.btn-chk:hover:not(:disabled){background:var(--accd);}
+.btn-chk:disabled{opacity:.3;cursor:default;}
+.write-hint{font-size:11px;color:var(--t3);padding:0 4px;line-height:1.4;}
+.write-hint span{color:var(--t2);}
+/* ── options ── */
 .opts{padding:12px;display:flex;flex-direction:column;gap:8px;}
-.opt{display:flex;align-items:center;gap:14px;padding:13px 16px;border:1px solid var(--bd);border-radius:9px;background:transparent;cursor:pointer;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--t1);transition:border-color 0.15s,background 0.15s;line-height:1.5;}
+.opt{display:flex;align-items:center;gap:14px;padding:13px 16px;border:1px solid var(--bd);border-radius:9px;background:transparent;cursor:pointer;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--t1);transition:border-color .15s,background .15s;line-height:1.5;}
 .opt:hover:not(:disabled){border-color:var(--bdh);background:var(--s2);}
-.opt:active:not(:disabled){transform:scale(0.99);}
-.opt .badge{width:26px;height:26px;min-width:26px;border-radius:50%;border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--t2);transition:all 0.15s;flex-shrink:0;}
+.opt:active:not(:disabled){transform:scale(.99);}
+.opt .badge{width:26px;height:26px;min-width:26px;border-radius:50%;border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--t2);transition:all .15s;flex-shrink:0;}
 .opt:hover:not(:disabled) .badge{border-color:var(--bdh);color:var(--t1);}
 .opt.correct{border-color:var(--bda);background:var(--accd);}
 .opt.correct .badge{border-color:var(--acc);background:var(--acc);color:#051A14;font-weight:500;}
@@ -55,40 +73,44 @@
 .opt.wrong{border-color:var(--bdr);background:var(--redd);}
 .opt.wrong .badge{border-color:var(--red);background:var(--red);color:#1A0303;}
 .opt.wrong .ol{color:var(--red);}
-.opt.reveal{border-color:rgba(0,212,160,0.2);background:rgba(0,212,160,0.05);}
+.opt.reveal{border-color:rgba(0,212,160,.2);background:rgba(0,212,160,.05);}
 .opt.reveal .badge{border-color:var(--acc);color:var(--acc);}
 .opt.reveal .ol{color:var(--acc);}
 .opt:disabled{cursor:default;}
-.fb{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:9px;border:1px solid transparent;font-size:13px;font-weight:500;margin-bottom:14px;opacity:0;transition:opacity 0.2s;}
+/* ── feedback ── */
+.fb{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:9px;border:1px solid transparent;font-size:13px;font-weight:500;margin-bottom:14px;opacity:0;transition:opacity .2s;}
 .fb.show{opacity:1;}
 .fb.ok{border-color:var(--bda);background:var(--accd);color:var(--acc);}
 .fb.no{border-color:var(--bdr);background:var(--redd);color:var(--red);}
-.fb i{font-size:16px;}
+.fb-icon{font-size:17px;flex-shrink:0;}
+/* ── nav ── */
 .nav{display:flex;justify-content:space-between;align-items:center;}
-.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;border-radius:8px;border:1px solid var(--bd);background:transparent;color:var(--t2);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.15s;letter-spacing:0.01em;}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;border-radius:8px;border:1px solid var(--bd);background:transparent;color:var(--t2);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;letter-spacing:.01em;}
 .btn:hover:not(:disabled){border-color:var(--bdh);color:var(--t1);background:var(--s2);}
-.btn:active:not(:disabled){transform:scale(0.98);}
-.btn:disabled{opacity:0.25;cursor:default;}
+.btn:active:not(:disabled){transform:scale(.98);}
+.btn:disabled{opacity:.25;cursor:default;}
 .btn-acc{border-color:var(--acc);color:var(--acc);}
-.btn-acc:hover:not(:disabled){background:var(--accd);border-color:var(--acc);color:var(--acc);}
+.btn-acc:hover:not(:disabled){background:var(--accd);}
+/* ── end screen ── */
 .end{text-align:center;padding:2.5rem 0;}
 .ring{width:110px;height:110px;border-radius:50%;border:1px solid var(--acc);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1.5rem;background:var(--accd);}
 .ring-num{font-family:'DM Mono',monospace;font-size:30px;font-weight:500;color:var(--acc);}
-.ring-lbl{font-size:11px;color:var(--tacc);letter-spacing:0.08em;text-transform:uppercase;margin-top:2px;}
+.ring-lbl{font-size:11px;color:var(--tacc);letter-spacing:.08em;text-transform:uppercase;margin-top:2px;}
 .end-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--t1);margin-bottom:6px;}
 .end-sub{font-size:13px;color:var(--t2);margin-bottom:2rem;}
-.end-btns{display:flex;gap:10px;justify-content:center;margin-bottom:2rem;}
-.rev-hd{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;color:var(--t3);margin-bottom:12px;}
+.end-btns{display:flex;gap:10px;justify-content:center;margin-bottom:2rem;flex-wrap:wrap;}
+.rev-hd{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:12px;text-align:left;}
 .rev-item{border:1px solid var(--bd);border-radius:10px;padding:1rem 1.25rem;margin-bottom:8px;text-align:left;background:var(--s1);}
 .rev-q{font-family:'Playfair Display',serif;font-size:14px;color:var(--t1);margin-bottom:8px;line-height:1.5;}
 .rev-row{display:flex;align-items:flex-start;gap:8px;font-size:12px;margin-top:5px;color:var(--t2);}
-.dot{width:14px;height:14px;min-width:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;margin-top:1px;}
+.dot{width:14px;height:14px;min-width:14px;border-radius:50%;margin-top:1px;flex-shrink:0;}
 .dot-ok{background:var(--acc);}
 .dot-no{background:var(--red);}
 .rev-ok{color:var(--acc);}
 .rev-no{color:var(--red);}
 </style>
-<h2 class="sr-only"></h2>
+</head>
+<body>
 <div id="shell">
   <div class="hd">
     <div><div class="brand-sub">Ôn thi</div><div class="brand-name">Tài chính</div></div>
@@ -106,18 +128,34 @@
     <div class="sc"><div class="sc-val g" id="sv-c">0</div><div class="sc-lbl">Đúng</div></div>
     <div class="sc"><div class="sc-val r" id="sv-w">0</div><div class="sc-lbl">Sai</div></div>
   </div>
+  <div class="ctrl-bar">
+    <button class="ctrl-btn" id="btn-shuffle" onclick="toggleShuffle()">🔀 Trộn câu</button>
+    <button class="ctrl-btn" id="btn-mode" onclick="toggleMode()">✏️ Tự điền</button>
+  </div>
   <div id="quiz-view">
     <div class="q-card">
       <div class="q-head">
         <div class="q-num" id="q-num">CÂU 1 / 32</div>
         <div class="q-txt" id="q-txt"></div>
       </div>
+      <!-- write mode input area -->
+      <div class="write-wrap" id="write-wrap" style="display:none;">
+        <div class="write-lbl">Nhập đáp án</div>
+        <div class="write-row">
+          <input type="text" id="write-input" class="write-input"
+                 placeholder="A / B / C / D  hoặc viết tắt: NNH, TSNH NNH…"
+                 autocomplete="off" spellcheck="false"
+                 onkeydown="if(event.key==='Enter')checkWrite()"/>
+          <button class="btn-chk" id="btn-chk" onclick="checkWrite()">Kiểm tra</button>
+        </div>
+        <div class="write-hint">Chấp nhận: <span>chữ thường · không dấu · viết tắt (NNH, TSNH, LNST…) · hỗn hợp (Nợ NH)</span></div>
+      </div>
       <div class="opts" id="opts"></div>
     </div>
     <div class="fb" id="fb"></div>
     <div class="nav">
-      <button class="btn" id="btn-prev" onclick="go(-1)"><i class="ti ti-arrow-left" aria-hidden="true"></i> Trước</button>
-      <button class="btn btn-acc" id="btn-next" onclick="go(1)" disabled>Tiếp theo <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+      <button class="btn" id="btn-prev" onclick="go(-1)">← Trước</button>
+      <button class="btn btn-acc" id="btn-next" onclick="go(1)" disabled>Tiếp theo →</button>
     </div>
   </div>
   <div id="end-view" style="display:none;" class="end">
@@ -125,60 +163,339 @@
     <div class="end-title" id="e-title">Hoàn thành!</div>
     <div class="end-sub" id="e-sub"></div>
     <div class="end-btns">
-      <button class="btn" onclick="restart(false)"><i class="ti ti-refresh" aria-hidden="true"></i> Làm lại</button>
-      <button class="btn btn-acc" id="btn-wr" onclick="restart(true)"><i class="ti ti-list-check" aria-hidden="true"></i> Ôn câu sai</button>
+      <button class="btn" onclick="restart(false)">↺ Làm lại</button>
+      <button class="btn btn-acc" id="btn-wr" onclick="restart(true)">☑ Ôn câu sai</button>
     </div>
     <div id="rev-box"></div>
   </div>
 </div>
+
 <script>
+/* ═══════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════ */
+const ALL=[
+  {"Câu hỏi":"Công thức của hệ số thanh toán hiện hành là gì?","Options":{"A":"Tổng tài sản / Tổng nợ phải trả","B":"(TSNH - HTK) / Nợ ngắn hạn","C":"TSNH / Nợ ngắn hạn","D":"Tiền và các khoản tương đương tiền / Nợ ngắn hạn"},"Answer":"C"},
+  {"Câu hỏi":"Công thức của hệ số thanh toán nhanh là gì?","Options":{"A":"TSNH / Nợ ngắn hạn","B":"(TSNH - HTK) / Nợ ngắn hạn","C":"Tổng tài sản / Tổng nợ phải trả","D":"Tiền và các khoản tương đương tiền / Tổng nợ phải trả"},"Answer":"B"},
+  {"Câu hỏi":"Công thức của hệ số thanh toán tức thời là gì?","Options":{"A":"Tiền và các khoản tương đương tiền / Tổng nợ ngắn hạn","B":"TSNH / Tổng nợ phải trả","C":"(TSNH - HTK) / Tổng tài sản","D":"Tổng tài sản / Nợ ngắn hạn"},"Answer":"A"},
+  {"Câu hỏi":"Công thức của hệ số thanh toán tổng quát là gì?","Options":{"A":"TSNH / Nợ ngắn hạn","B":"(TSNH - HTK) / Nợ ngắn hạn","C":"Tiền và các khoản tương đương tiền / Nợ ngắn hạn","D":"Tổng tài sản / Tổng nợ phải trả"},"Answer":"D"},
+  {"Câu hỏi":"Công thức của hệ số tự tài trợ là gì?","Options":{"A":"VCSH / Tổng tài sản","B":"Tổng nợ / Tổng tài sản","C":"VCSH / TSDH","D":"NVDH / TSDH"},"Answer":"A"},
+  {"Câu hỏi":"Công thức của hệ số nợ là gì?","Options":{"A":"VCSH / Tổng tài sản","B":"Tổng nợ / Tổng tài sản","C":"Tổng tài sản / Tổng nợ","D":"Nợ ngắn hạn / TSNH"},"Answer":"B"},
+  {"Câu hỏi":"Công thức của nguồn vốn dài hạn là gì?","Options":{"A":"VCSH + Nợ dài hạn","B":"TSNH - Nợ ngắn hạn","C":"Tổng nợ / Tổng tài sản","D":"EBIT / Chi phí lãi vay"},"Answer":"A"},
+  {"Câu hỏi":"Công thức của hệ số tài trợ thường xuyên là gì?","Options":{"A":"VCSH / Tổng tài sản","B":"Tổng nợ / Tổng tài sản","C":"NVDH / TSDH","D":"VCSH / TSDH"},"Answer":"C"},
+  {"Câu hỏi":"Công thức của tỉ số tự tài trợ TSDH là gì?","Options":{"A":"VCSH / TSDH","B":"NVDH / TSDH","C":"Tổng nợ / Tổng tài sản","D":"TSNH - Nợ ngắn hạn"},"Answer":"A"},
+  {"Câu hỏi":"Công thức của hệ số tự tài trợ TSCĐ là gì?","Options":{"A":"VCSH / TSCĐ","B":"VCSH / TSDH","C":"NVDH / TSDH","D":"Tổng nợ / TSCĐ"},"Answer":"A"},
+  {"Câu hỏi":"Công thức của vốn lưu động ròng là gì?","Options":{"A":"TSNH - Nợ ngắn hạn","B":"NVDH - TSDH","C":"VCSH + Nợ dài hạn","D":"Cả A và B đều đúng"},"Answer":"D"},
+  {"Câu hỏi":"Công thức của khả năng trả lãi vay là gì?","Options":{"A":"EBIT / Chi phí lãi vay","B":"Chi phí lãi vay / EBIT","C":"Tổng nợ / Tổng tài sản","D":"VCSH / Tổng tài sản"},"Answer":"A"},
+  {"Câu hỏi":"Công thức của tỷ suất lợi nhuận gộp là gì?","Options":{"A":"Lợi nhuận gộp / Doanh thu thuần","B":"Lợi nhuận sau thuế / Doanh thu thuần","C":"EBIT / Tổng tài sản bình quân","D":"Lợi nhuận sau thuế / VCSH bình quân"},"Answer":"A"},
+  {"Câu hỏi":"Công thức của ROS là gì?","Options":{"A":"Lợi nhuận sau thuế / Tổng tài sản bình quân","B":"Lợi nhuận sau thuế / VCSH bình quân","C":"Lợi nhuận sau thuế / Doanh thu thuần","D":"EBIT / Doanh thu thuần"},"Answer":"C"},
+  {"Câu hỏi":"Công thức của ROA là gì?","Options":{"A":"Lợi nhuận sau thuế / Doanh thu thuần","B":"Lợi nhuận sau thuế / Tổng tài sản bình quân","C":"Lợi nhuận sau thuế / VCSH bình quân","D":"EBIT / Tổng tài sản bình quân"},"Answer":"B"},
+  {"Câu hỏi":"Công thức của ROE là gì?","Options":{"A":"Lợi nhuận sau thuế / Tổng tài sản bình quân","B":"EBIT / Tổng tài sản bình quân","C":"Lợi nhuận gộp / Doanh thu thuần","D":"Lợi nhuận sau thuế / VCSH bình quân"},"Answer":"D"},
+  {"Câu hỏi":"Công thức của BEP là gì?","Options":{"A":"EBIT / Tổng tài sản bình quân","B":"Lợi nhuận sau thuế / Doanh thu thuần","C":"Lợi nhuận sau thuế / VCSH bình quân","D":"Lợi nhuận gộp / Doanh thu thuần"},"Answer":"A"},
+  {"Câu hỏi":"Công thức ROE theo mô hình Dupont là gì?","Options":{"A":"ROE = ROS × Vòng quay tổng tài sản × Đòn bẩy tài chính","B":"ROE = LNST / Tổng tài sản bình quân","C":"ROE = EBIT / Tổng tài sản bình quân","D":"ROE = LNST / Doanh thu thuần"},"Answer":"A"},
+  {"Câu hỏi":"Công thức của vòng quay tổng tài sản là gì?","Options":{"A":"Doanh thu / Tổng tài sản bình quân","B":"Tổng tài sản bình quân / Doanh thu","C":"LNST / Tổng tài sản bình quân","D":"Doanh thu / VCSH bình quân"},"Answer":"A"},
+  {"Câu hỏi":"Công thức của đòn bẩy tài chính là gì?","Options":{"A":"Tổng tài sản bình quân / VCSH bình quân","B":"VCSH bình quân / Tổng tài sản bình quân","C":"Tổng nợ / Tổng tài sản","D":"LNST / VCSH bình quân"},"Answer":"A"},
+  {"Câu hỏi":"Công thức của ROCE là gì?","Options":{"A":"(LNST - Cổ tức ưu đãi) / Vốn cổ phần thường bình quân","B":"LNST / Tổng tài sản bình quân","C":"EBIT / Tổng tài sản bình quân","D":"LNST / Doanh thu thuần"},"Answer":"A"},
+  {"Câu hỏi":"Công thức của EPS là gì?","Options":{"A":"(LNST - Cổ tức ưu đãi) / Số cổ phiếu thường lưu hành bình quân","B":"Giá thị trường cổ phiếu / EPS","C":"LNST / Tổng tài sản bình quân","D":"LNST / VCSH bình quân"},"Answer":"A"},
+  {"Câu hỏi":"Công thức của P/E là gì?","Options":{"A":"Giá thị trường cổ phiếu / EPS","B":"EPS / Giá thị trường cổ phiếu","C":"LNST / Số cổ phiếu thường lưu hành bình quân","D":"Doanh thu / Tổng tài sản bình quân"},"Answer":"A"},
+  {"Câu hỏi":"Công thức của hiệu suất sử dụng tổng tài sản là gì?","Options":{"A":"Doanh thu thuần / Tổng tài sản bình quân","B":"Doanh thu thuần / Tổng TSNH bình quân","C":"Giá vốn hàng bán / Hàng tồn kho bình quân","D":"365 / Vòng quay hàng tồn kho"},"Answer":"A"},
+  {"Câu hỏi":"Công thức của hiệu suất sử dụng tài sản ngắn hạn là gì?","Options":{"A":"Doanh thu thuần / Tổng tài sản bình quân","B":"Doanh thu thuần / Tổng TSNH bình quân","C":"Giá vốn hàng bán / Hàng tồn kho bình quân","D":"Doanh thu thuần / Phải thu bình quân"},"Answer":"B"},
+  {"Câu hỏi":"Công thức của vòng quay hàng tồn kho là gì?","Options":{"A":"Doanh thu thuần / Hàng tồn kho bình quân","B":"365 / Vòng quay hàng tồn kho","C":"Giá vốn hàng bán / Hàng tồn kho bình quân","D":"Hàng tồn kho bình quân / Giá vốn hàng bán"},"Answer":"C"},
+  {"Câu hỏi":"Công thức của số ngày tồn kho là gì?","Options":{"A":"365 / Vòng quay hàng tồn kho","B":"Vòng quay hàng tồn kho / 365","C":"Giá vốn hàng bán / Hàng tồn kho bình quân","D":"365 / Vòng quay phải thu"},"Answer":"A"},
+  {"Câu hỏi":"Công thức của vòng quay phải thu là gì?","Options":{"A":"Doanh thu thuần / Phải thu bình quân","B":"Giá vốn hàng bán / Phải trả người bán bình quân","C":"365 / Vòng quay phải thu","D":"Phải thu bình quân / Doanh thu thuần"},"Answer":"A"},
+  {"Câu hỏi":"Công thức của kỳ thu tiền bình quân là gì?","Options":{"A":"365 / Vòng quay hàng tồn kho","B":"365 / Vòng quay phải thu","C":"365 / Vòng quay phải trả người bán","D":"Doanh thu thuần / Phải thu bình quân"},"Answer":"B"},
+  {"Câu hỏi":"Công thức của vòng quay phải trả người bán là gì?","Options":{"A":"Doanh thu thuần / Phải trả người bán bình quân","B":"Giá vốn hàng bán / Phải trả người bán bình quân","C":"365 / Vòng quay phải trả người bán","D":"Phải trả người bán bình quân / Giá vốn hàng bán"},"Answer":"B"},
+  {"Câu hỏi":"Công thức của số ngày phải trả tiền bình quân là gì?","Options":{"A":"365 / Vòng quay phải trả người bán","B":"365 / Vòng quay phải thu","C":"365 / Vòng quay hàng tồn kho","D":"Giá vốn hàng bán / Phải trả người bán bình quân"},"Answer":"A"},
+  {"Câu hỏi":"Công thức của chu kỳ chuyển đổi tiền mặt (CCC) là gì?","Options":{"A":"Số ngày tồn kho + Kỳ thu tiền bình quân - Số ngày phải trả tiền bình quân","B":"Số ngày tồn kho + Kỳ thu tiền bình quân + Số ngày phải trả tiền bình quân","C":"Kỳ thu tiền bình quân + Số ngày phải trả tiền bình quân - Số ngày tồn kho","D":"365 / Vòng quay hàng tồn kho"},"Answer":"A"}
+];
 
-const ALL=[{"Câu hỏi":"Công thức của hệ số thanh toán hiện hành là gì?","Options":{"A":"Tổng tài sản / Tổng nợ phải trả","B":"(TSNH - HTK) / Nợ ngắn hạn","C":"TSNH / Nợ ngắn hạn","D":"Tiền và các khoản tương đương tiền / Nợ ngắn hạn"},"Answer":"C"},{"Câu hỏi":"Công thức của hệ số thanh toán nhanh là gì?","Options":{"A":"TSNH / Nợ ngắn hạn","B":"TSNH / HTK","C":"Tổng tài sản / Tổng nợ phải trả","D":"Tiền và các khoản tương đương tiền / Tổng nợ phải trả"},"Answer":"B"},{"Câu hỏi":"Công thức của hệ số thanh toán tức thời là gì?","Options":{"A":"Tiền và các khoản tương đương tiền / Tổng nợ ngắn hạn","B":"TSNH / Tổng nợ phải trả","C":"(TSNH - HTK) / Tổng tài sản","D":"Tổng tài sản / Nợ ngắn hạn"},"Answer":"A"},{"Câu hỏi":"Công thức của hệ số thanh toán tổng quát là gì?","Options":{"A":"TSNH / Nợ ngắn hạn","B":"(TSNH - HTK) / Nợ ngắn hạn","C":"Tiền và các khoản tương đương tiền / Nợ ngắn hạn","D":"Tổng tài sản / Tổng nợ phải trả"},"Answer":"D"},{"Câu hỏi":"Công thức của hệ số tự tài trợ là gì?","Options":{"A":"VCSH / Tổng tài sản","B":"Tổng nợ / Tổng tài sản","C":"VCSH / TSDH","D":"NVDH / TSDH"},"Answer":"A"},{"Câu hỏi":"Công thức của hệ số nợ là gì?","Options":{"A":"VCSH / Tổng tài sản","B":"Tổng nợ / Tổng tài sản","C":"Tổng tài sản / Tổng nợ","D":"Nợ ngắn hạn / TSNH"},"Answer":"B"},{"Câu hỏi":"Công thức của nguồn vốn dài hạn là gì?","Options":{"A":"VCSH + Nợ dài hạn","B":"TSNH - Nợ ngắn hạn","C":"Tổng nợ / Tổng tài sản","D":"EBIT / Chi phí lãi vay"},"Answer":"A"},{"Câu hỏi":"Công thức của hệ số tài trợ thường xuyên là gì?","Options":{"A":"VCSH / Tổng tài sản","B":"Tổng nợ / Tổng tài sản","C":"NVDH / TSDH","D":"VCSH / TSDH"},"Answer":"C"},{"Câu hỏi":"Công thức của tỉ số tự tài trợ TSDH là gì?","Options":{"A":"VCSH / TSDH","B":"NVDH / TSDH","C":"Tổng nợ / Tổng tài sản","D":"TSNH - Nợ ngắn hạn"},"Answer":"A"},{"Câu hỏi":"Công thức của hệ số tự tài trợ TSCĐ là gì?","Options":{"A":"VCSH / TSCĐ","B":"VCSH / TSDH","C":"NVDH / TSDH","D":"Tổng nợ / TSCĐ"},"Answer":"A"},{"Câu hỏi":"Công thức của vốn lưu động ròng là gì?","Options":{"A":"TSNH - Nợ ngắn hạn","B":"NVDH - TSDH","C":"VCSH + Nợ dài hạn","D":"Cả A và B đều đúng"},"Answer":"D"},{"Câu hỏi":"Công thức của khả năng trả lãi vay là gì?","Options":{"A":"EBIT / Chi phí lãi vay","B":"Chi phí lãi vay / EBIT","C":"Tổng nợ / Tổng tài sản","D":"VCSH / Tổng tài sản"},"Answer":"A"},{"Câu hỏi":"Công thức của tỷ suất lợi nhuận gộp là gì?","Options":{"A":"Lợi nhuận gộp / Doanh thu thuần","B":"Lợi nhuận sau thuế / Doanh thu thuần","C":"EBIT / Tổng tài sản bình quân","D":"Lợi nhuận sau thuế / VCSH bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của ROS là gì?","Options":{"A":"Lợi nhuận sau thuế / Tổng tài sản bình quân","B":"Lợi nhuận sau thuế / VCSH bình quân","C":"Lợi nhuận sau thuế / Doanh thu thuần","D":"EBIT / Doanh thu thuần"},"Answer":"C"},{"Câu hỏi":"Công thức của ROA là gì?","Options":{"A":"Lợi nhuận sau thuế / Doanh thu thuần","B":"Lợi nhuận sau thuế / Tổng tài sản bình quân","C":"Lợi nhuận sau thuế / VCSH bình quân","D":"EBIT / Tổng tài sản bình quân"},"Answer":"B"},{"Câu hỏi":"Công thức của ROE là gì?","Options":{"A":"Lợi nhuận sau thuế / Tổng tài sản bình quân","B":"EBIT / Tổng tài sản bình quân","C":"Lợi nhuận gộp / Doanh thu thuần","D":"Lợi nhuận sau thuế / VCSH bình quân"},"Answer":"D"},{"Câu hỏi":"Công thức của BEP là gì?","Options":{"A":"EBIT / Tổng tài sản bình quân","B":"Lợi nhuận sau thuế / Doanh thu thuần","C":"Lợi nhuận sau thuế / VCSH bình quân","D":"Lợi nhuận gộp / Doanh thu thuần"},"Answer":"A"},{"Câu hỏi":"Công thức ROE theo mô hình Dupont là gì?","Options":{"A":"ROE = ROS × Vòng quay tổng tài sản × Đòn bẩy tài chính","B":"ROE = LNST / Tổng tài sản bình quân","C":"ROE = EBIT / Tổng tài sản bình quân","D":"ROE = LNST / Doanh thu thuần"},"Answer":"A"},{"Câu hỏi":"Công thức của vòng quay tổng tài sản là gì?","Options":{"A":"Doanh thu / Tổng tài sản bình quân","B":"Tổng tài sản bình quân / Doanh thu","C":"LNST / Tổng tài sản bình quân","D":"Doanh thu / VCSH bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của đòn bẩy tài chính là gì?","Options":{"A":"Tổng tài sản bình quân / VCSH bình quân","B":"VCSH bình quân / Tổng tài sản bình quân","C":"Tổng nợ / Tổng tài sản","D":"LNST / VCSH bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của ROCE là gì?","Options":{"A":"(LNST - Cổ tức ưu đãi) / Vốn cổ phần thường bình quân","B":"LNST / Tổng tài sản bình quân","C":"EBIT / Tổng tài sản bình quân","D":"LNST / Doanh thu thuần"},"Answer":"A"},{"Câu hỏi":"Công thức của EPS là gì?","Options":{"A":"(LNST - Cổ tức ưu đãi) / Số cổ phiếu thường lưu hành bình quân","B":"Giá thị trường cổ phiếu / EPS","C":"LNST / Tổng tài sản bình quân","D":"LNST / VCSH bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của P/E là gì?","Options":{"A":"Giá thị trường cổ phiếu / EPS","B":"EPS / Giá thị trường cổ phiếu","C":"LNST / Số cổ phiếu thường lưu hành bình quân","D":"Doanh thu / Tổng tài sản bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của hiệu suất sử dụng tổng tài sản là gì?","Options":{"A":"Doanh thu thuần / Tổng tài sản bình quân","B":"Doanh thu thuần / Tổng TSNH bình quân","C":"Giá vốn hàng bán / Hàng tồn kho bình quân","D":"365 / Vòng quay hàng tồn kho"},"Answer":"A"},{"Câu hỏi":"Công thức của hiệu suất sử dụng tài sản ngắn hạn là gì?","Options":{"A":"Doanh thu thuần / Tổng tài sản bình quân","B":"Doanh thu thuần / Tổng TSNH bình quân","C":"Giá vốn hàng bán / Hàng tồn kho bình quân","D":"Doanh thu thuần / Phải thu bình quân"},"Answer":"B"},{"Câu hỏi":"Công thức của vòng quay hàng tồn kho là gì?","Options":{"A":"Doanh thu thuần / Hàng tồn kho bình quân","B":"365 / Vòng quay hàng tồn kho","C":"Giá vốn hàng bán / Hàng tồn kho bình quân","D":"Hàng tồn kho bình quân / Giá vốn hàng bán"},"Answer":"C"},{"Câu hỏi":"Công thức của số ngày tồn kho là gì?","Options":{"A":"365 / Vòng quay hàng tồn kho","B":"Vòng quay hàng tồn kho / 365","C":"Giá vốn hàng bán / Hàng tồn kho bình quân","D":"365 / Vòng quay phải thu"},"Answer":"A"},{"Câu hỏi":"Công thức của vòng quay phải thu là gì?","Options":{"A":"Doanh thu thuần / Phải thu bình quân","B":"Giá vốn hàng bán / Phải trả người bán bình quân","C":"365 / Vòng quay phải thu","D":"Phải thu bình quân / Doanh thu thuần"},"Answer":"A"},{"Câu hỏi":"Công thức của kỳ thu tiền bình quân là gì?","Options":{"A":"365 / Vòng quay hàng tồn kho","B":"365 / Vòng quay phải thu","C":"365 / Vòng quay phải trả người bán","D":"Doanh thu thuần / Phải thu bình quân"},"Answer":"B"},{"Câu hỏi":"Công thức của vòng quay phải trả người bán là gì?","Options":{"A":"Doanh thu thuần / Phải trả người bán bình quân","B":"Giá vốn hàng bán / Phải trả người bán bình quân","C":"365 / Vòng quay phải trả người bán","D":"Phải trả người bán bình quân / Giá vốn hàng bán"},"Answer":"B"},{"Câu hỏi":"Công thức của số ngày phải trả tiền bình quân là gì?","Options":{"A":"365 / Vòng quay phải trả người bán","B":"365 / Vòng quay phải thu","C":"365 / Vòng quay hàng tồn kho","D":"Giá vốn hàng bán / Phải trả người bán bình quân"},"Answer":"A"},{"Câu hỏi":"Công thức của chu kỳ chuyển đổi tiền mặt (CCC) là gì?","Options":{"A":"Số ngày tồn kho + Kỳ thu tiền bình quân - Số ngày phải trả tiền bình quân","B":"Số ngày tồn kho + Kỳ thu tiền bình quân + Số ngày phải trả tiền bình quân","C":"Kỳ thu tiền bình quân + Số ngày phải trả tiền bình quân - Số ngày tồn kho","D":"365 / Vòng quay hàng tồn kho"},"Answer":"A"}];
+/* ═══════════════════════════════════════════
+   GROUPS  (0-indexed, end exclusive)
+═══════════════════════════════════════════ */
+const GROUP_SLICES=[ALL.slice(0,4),ALL.slice(4,12),ALL.slice(12,23),ALL.slice(23,32)];
+const GROUP_LABELS=['Nhóm 1 · Thanh khoản','Nhóm 2 · Cấu trúc vốn','Nhóm 3 · Lợi nhuận & Hiệu quả','Nhóm 4 · Hiệu suất hoạt động'];
 
+function getGroupLabel(q){
+  const i=ALL.indexOf(q);
+  return i<4?GROUP_LABELS[0]:i<12?GROUP_LABELS[1]:i<23?GROUP_LABELS[2]:GROUP_LABELS[3];
+}
+
+/* ═══════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════ */
+let shuffleEnabled=false,writeMode=false;
 let deck=[...ALL],idx=0,cor=0,wrg=0,answered=false,results=[];
+
+/* ═══════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════ */
+function shuffleArr(a){
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+function buildDeck(){
+  return GROUP_SLICES.flatMap(g=>shuffleEnabled?shuffleArr([...g]):[...g]);
+}
+
+/* ═══════════════════════════════════════════
+   VIETNAMESE NORMALIZATION
+═══════════════════════════════════════════ */
+/**
+ * Normalize a string:
+ * 1. Lowercase
+ * 2. NFD decompose → strip all combining diacritical marks U+0300–U+036F
+ *    (covers Vietnamese tones, ă, ơ, ư, â, ê, ô …)
+ * 3. Replace đ → d
+ * 4. Remove every non-alphanumeric character
+ * Result: "Nợ ngắn hạn" → "nonganhan"
+ *         "No ngan han"  → "nonganhan"  (same!)
+ */
+function normVN(s){
+  return s.toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .replace(/đ/g,'d')
+    .replace(/[^a-z0-9]/g,'');
+}
+
+/** Classic Levenshtein edit distance */
+function lev(a,b){
+  const m=a.length,n=b.length;
+  const dp=[];
+  for(let i=0;i<=m;i++){dp[i]=new Array(n+1);dp[i][0]=i;}
+  for(let j=0;j<=n;j++)dp[0][j]=j;
+  for(let i=1;i<=m;i++)
+    for(let j=1;j<=n;j++)
+      dp[i][j]=a[i-1]===b[j-1]
+        ?dp[i-1][j-1]
+        :1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+  return dp[m][n];
+}
+
+/**
+ * Abbreviation-aware word match.
+ *
+ * Splits user input and answer text into word-tokens (normVN of each word,
+ * punctuation-only tokens like "/" and "-" are dropped). Then checks whether
+ * every input token either:
+ *   (a) matches the next answer word exactly (normalized), OR
+ *   (b) spells out the initial letters of one-or-more consecutive answer words.
+ *
+ * All answer words must be fully covered — no word may be skipped.
+ *
+ * Examples (correct answer: "TSNH / Nợ ngắn hạn"):
+ *   answer words (normalized): ["tsnh", "no", "ngan", "han"]
+ *
+ *   "NNH"      → token "nnh": n→no ✓  n→ngan ✓  h→han ✓  — covers all 4? No: "nnh" only
+ *                hits no+ngan+han (3 words), but "tsnh" is uncovered → false
+ *   "TSNH NNH" → "tsnh" exact ✓; "nnh" → no+ngan+han ✓ — all 4 covered → true ✓
+ *
+ * Examples (correct answer: "Nợ ngắn hạn"):
+ *   answer words: ["no", "ngan", "han"]
+ *
+ *   "NNH"    → "nnh": n→no ✓ n→ngan ✓ h→han ✓ → true ✓
+ *   "Nợ NH"  → "no" exact ✓; "nh": n→ngan ✓ h→han ✓ → true ✓
+ *   "no nh"  → same after normVN → true ✓
+ */
+function matchWithAbbrev(input, answerText) {
+  const inputTokens = input.trim().split(/\s+/).filter(Boolean);
+  if (!inputTokens.length) return false;
+  // normVN each token; drop any that normalize to empty (e.g. pure punctuation)
+  const ni = inputTokens.map(normVN).filter(Boolean);
+  // Same treatment for answer: split by whitespace, normVN, drop empty
+  const na = answerText.trim().split(/\s+/).map(normVN).filter(Boolean);
+  if (!ni.length || !na.length) return false;
+
+  let ai = 0; // current position in answer word array
+  for (const iw of ni) {
+    if (ai >= na.length) return false; // input still has tokens but answer exhausted
+
+    // (a) Exact normalized word match
+    if (iw === na[ai]) { ai++; continue; }
+
+    // (b) Abbreviation match: each character of iw must equal the first character
+    //     of successive answer words starting at position ai.
+    let k = 0;
+    for (const c of iw) {
+      if (ai + k < na.length && na[ai + k][0] === c) k++;
+      else break;
+    }
+    if (k === iw.length && k > 0) { ai += k; continue; }
+
+    return false; // token matched neither way
+  }
+
+  return ai === na.length; // every answer word must be covered
+}
+
+/**
+ * Fuzzy match: accepts if
+ *  a) user typed the correct option letter (A/B/C/D, case-insensitive)
+ *  b) normalized strings are identical (strips diacritics, spaces, punctuation)
+ *  c) abbreviation-aware match via matchWithAbbrev()
+ *       "NNH"      → "Nợ ngắn hạn"                ✓
+ *       "Nợ NH"    → "Nợ ngắn hạn"                ✓
+ *       "no nh"    → "Nợ ngắn hạn"                ✓
+ *       "TSNH NNH" → "TSNH / Nợ ngắn hạn"         ✓
+ *       "LNST DTT" → "Lợi nhuận sau thuế / Doanh thu thuần" ✓
+ *  d) Levenshtein distance ≤ ~12% of answer length AND length ratio 0.65–1.4
+ *     (tolerates minor typos without accepting wildly different answers)
+ */
+function fuzzy(input,key,text){
+  const u=input.trim();
+  if(!u)return false;
+  if(u.toUpperCase()===key)return true;                    // option letter shortcut
+  const ni=normVN(u),nc=normVN(text);
+  if(!ni||!nc)return false;
+  if(ni===nc)return true;                                  // exact normalised match
+  if(matchWithAbbrev(u,text))return true;                  // abbreviation match ← NEW
+  const dist=lev(ni,nc);
+  const thr=Math.max(1,Math.floor(nc.length*0.12));
+  const ratio=ni.length/nc.length;
+  return dist<=thr&&ratio>=0.65&&ratio<=1.4;               // typo tolerance
+}
+
+/* ═══════════════════════════════════════════
+   RENDER
+═══════════════════════════════════════════ */
 function render(){
   if(idx>=deck.length){showEnd();return;}
   answered=false;
-  const q=deck[idx],tot=deck.length;
+  const q=deck[idx],tot=deck.length,pct=Math.round(idx/tot*100);
   document.getElementById('num-big').textContent=String(idx+1).padStart(2,'0');
   document.getElementById('num-total').textContent=tot;
   document.getElementById('sv-t').textContent=tot;
-  const pct=Math.round(idx/tot*100);
   document.getElementById('pbar').style.width=pct+'%';
   document.getElementById('pbar-pct').textContent=pct+'%';
-  document.getElementById('q-num').textContent='CÂU '+(idx+1)+' / '+tot;
+  document.getElementById('q-num').textContent='CÂU '+(idx+1)+' / '+tot+'  ·  '+getGroupLabel(q);
   document.getElementById('q-txt').textContent=q['Câu hỏi'];
   const fb=document.getElementById('fb');fb.className='fb';fb.innerHTML='';
   document.getElementById('btn-next').disabled=true;
   document.getElementById('btn-prev').disabled=idx===0;
-  const container=document.getElementById('opts');container.innerHTML='';
-  Object.entries(q['Options']).forEach(([k,v])=>{
-    const b=document.createElement('button');
-    b.className='opt';
-    b.innerHTML='<span class="badge">'+k+'</span><span class="ol">'+v+'</span>';
-    b.onclick=()=>pick(k,q['Answer'],idx);
-    container.appendChild(b);
-  });
+  renderInputArea();
 }
+
+function renderInputArea(){
+  const q=deck[idx];
+  const optsEl=document.getElementById('opts');
+  const wwEl=document.getElementById('write-wrap');
+
+  if(writeMode){
+    optsEl.innerHTML='';
+    optsEl.style.display='none';
+    optsEl.style.borderTop='';
+    wwEl.style.display='flex';
+    const inp=document.getElementById('write-input');
+    inp.value='';inp.className='write-input';inp.disabled=false;
+    document.getElementById('btn-chk').disabled=false;
+    setTimeout(()=>inp.focus(),60);
+  } else {
+    optsEl.style.display='flex';
+    optsEl.style.borderTop='';
+    wwEl.style.display='none';
+    optsEl.innerHTML='';
+    Object.entries(q['Options']).forEach(([k,v])=>{
+      const b=document.createElement('button');
+      b.className='opt';
+      b.innerHTML='<span class="badge">'+k+'</span><span class="ol">'+v+'</span>';
+      b.onclick=()=>pick(k,q['Answer'],idx);
+      optsEl.appendChild(b);
+    });
+  }
+}
+
+/* ═══════════════════════════════════════════
+   ANSWER HANDLING
+═══════════════════════════════════════════ */
+
+/** MCQ mode: user clicked an option */
 function pick(chosen,ans,qIdx){
-  if(answered)return;answered=true;
+  if(answered)return;
   const isOk=chosen===ans;
-  if(isOk)cor++;else wrg++;
-  results[qIdx]={q:deck[qIdx],chosen,ans,ok:isOk};
-  document.getElementById('sv-c').textContent=cor;
-  document.getElementById('sv-w').textContent=wrg;
   document.querySelectorAll('.opt').forEach(b=>{
     b.disabled=true;
     const l=b.querySelector('.badge').textContent;
-    if(l===ans)b.classList.add(chosen===ans?'correct':'reveal');
+    if(l===ans)b.classList.add(isOk?'correct':'reveal');
     else if(l===chosen&&!isOk)b.classList.add('wrong');
   });
+  finalize(isOk,chosen,qIdx,null);
+}
+
+/** Write mode: user submitted text */
+function checkWrite(){
+  if(answered)return;
+  const inp=document.getElementById('write-input');
+  const val=inp.value;
+  if(!val.trim())return;
+  const q=deck[idx];
+  const isOk=fuzzy(val,q['Answer'],q['Options'][q['Answer']]);
+
+  // Color the input
+  inp.className='write-input '+(isOk?'ok':'no');
+  inp.disabled=true;
+  document.getElementById('btn-chk').disabled=true;
+
+  // Reveal options below input with separator
+  const optsEl=document.getElementById('opts');
+  optsEl.style.borderTop='1px solid var(--bd)';
+  optsEl.style.display='flex';
+  optsEl.innerHTML='';
+  Object.entries(q['Options']).forEach(([k,v])=>{
+    const b=document.createElement('button');
+    b.disabled=true;
+    b.className='opt'+(k===q['Answer']?(isOk?' correct':' reveal'):'');
+    b.innerHTML='<span class="badge">'+k+'</span><span class="ol">'+v+'</span>';
+    optsEl.appendChild(b);
+  });
+
+  finalize(isOk,q['Answer'],idx,val.trim());
+}
+
+/** Shared finalization for both modes */
+function finalize(isOk,chosen,qIdx,rawInput){
+  answered=true;
+  if(isOk)cor++;else wrg++;
+  results[qIdx]={q:deck[qIdx],chosen,rawInput,ans:deck[qIdx]['Answer'],ok:isOk};
+  document.getElementById('sv-c').textContent=cor;
+  document.getElementById('sv-w').textContent=wrg;
   const fb=document.getElementById('fb');
-  if(isOk){fb.innerHTML='<i class="ti ti-circle-check" style="font-size:17px" aria-hidden="true"></i> Chính xác!';fb.className='fb ok show';}
-  else{fb.innerHTML='<i class="ti ti-circle-x" style="font-size:17px" aria-hidden="true"></i> Sai rồi — đáp án đúng là <strong style="margin-left:4px;color:inherit">'+ans+'</strong>';fb.className='fb no show';}
+  if(isOk){
+    fb.innerHTML='<span class="fb-icon">✓</span> Chính xác!';
+    fb.className='fb ok show';
+  } else {
+    fb.innerHTML='<span class="fb-icon">✕</span> Sai rồi — đáp án đúng: <strong style="margin-left:4px;color:inherit">'+deck[qIdx]['Answer']+'</strong>';
+    fb.className='fb no show';
+  }
   document.getElementById('btn-next').disabled=false;
 }
+
+/* ═══════════════════════════════════════════
+   NAVIGATION & TOGGLES
+═══════════════════════════════════════════ */
 function go(d){idx+=d;if(idx<0)idx=0;render();}
+
+function toggleShuffle(){
+  shuffleEnabled=!shuffleEnabled;
+  document.getElementById('btn-shuffle').classList.toggle('on',shuffleEnabled);
+  doReset();
+}
+function toggleMode(){
+  writeMode=!writeMode;
+  document.getElementById('btn-mode').classList.toggle('on',writeMode);
+  doReset();
+}
+function doReset(){
+  deck=buildDeck();idx=0;cor=0;wrg=0;results=[];
+  document.getElementById('sv-c').textContent=0;
+  document.getElementById('sv-w').textContent=0;
+  document.getElementById('end-view').style.display='none';
+  document.getElementById('quiz-view').style.display='block';
+  render();
+}
+
+/* ═══════════════════════════════════════════
+   END SCREEN
+═══════════════════════════════════════════ */
 function showEnd(){
   document.getElementById('quiz-view').style.display='none';
   document.getElementById('end-view').style.display='block';
@@ -186,26 +503,35 @@ function showEnd(){
   document.getElementById('pbar-pct').textContent='100%';
   const tot=deck.length,pct=Math.round(cor/tot*100);
   document.getElementById('e-pct').textContent=pct+'%';
-  const titles=pct>=80?'Xuất sắc!':pct>=60?'Khá tốt!':'Cần ôn thêm!';
-  document.getElementById('e-title').textContent=titles;
+  document.getElementById('e-title').textContent=pct>=80?'Xuất sắc!':pct>=60?'Khá tốt!':'Cần ôn thêm!';
   document.getElementById('e-sub').textContent='Đúng '+cor+' / '+tot+' · Sai '+wrg+' câu';
   const wrong=results.filter(r=>r&&!r.ok);
   document.getElementById('btn-wr').disabled=wrong.length===0;
   const box=document.getElementById('rev-box');box.innerHTML='';
   if(wrong.length){
-    const h=document.createElement('div');h.className='rev-hd';h.textContent='Câu sai ('+wrong.length+')';box.appendChild(h);
+    const h=document.createElement('div');h.className='rev-hd';
+    h.textContent='Câu sai ('+wrong.length+')';box.appendChild(h);
     wrong.forEach(r=>{
       const d=document.createElement('div');d.className='rev-item';
+      const chosenLine=r.rawInput
+        ?'Đã nhập: "'+r.rawInput+'"'
+        :r.chosen+': '+(r.q['Options'][r.chosen]||'—');
       d.innerHTML='<div class="rev-q">'+r.q['Câu hỏi']+'</div>'+
-        '<div class="rev-row"><span class="dot dot-no" aria-hidden="true"></span><span class="rev-no">'+r.chosen+': '+r.q['Options'][r.chosen]+'</span></div>'+
-        '<div class="rev-row"><span class="dot dot-ok" aria-hidden="true"></span><span class="rev-ok">'+r.ans+': '+r.q['Options'][r.ans]+'</span></div>';
+        '<div class="rev-row"><span class="dot dot-no"></span><span class="rev-no">'+chosenLine+'</span></div>'+
+        '<div class="rev-row"><span class="dot dot-ok"></span><span class="rev-ok">'+r.ans+': '+r.q['Options'][r.ans]+'</span></div>';
       box.appendChild(d);
     });
   }
 }
+
 function restart(wrongOnly){
-  if(wrongOnly){const w=results.filter(r=>r&&!r.ok).map(r=>r.q);if(!w.length)return;deck=w;}
-  else deck=[...ALL];
+  if(wrongOnly){
+    const w=results.filter(r=>r&&!r.ok).map(r=>r.q);
+    if(!w.length)return;
+    deck=shuffleEnabled?shuffleArr([...w]):w;
+  } else {
+    deck=buildDeck();
+  }
   idx=0;cor=0;wrg=0;results=[];
   document.getElementById('sv-c').textContent=0;
   document.getElementById('sv-w').textContent=0;
@@ -213,5 +539,8 @@ function restart(wrongOnly){
   document.getElementById('quiz-view').style.display='block';
   render();
 }
+
 render();
 </script>
+</body>
+</html>
